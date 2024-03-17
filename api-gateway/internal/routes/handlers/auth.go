@@ -14,8 +14,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-
-
 func LoginProviderCallback(c *gin.Context) {
 
 	res := c.Writer
@@ -27,6 +25,8 @@ func LoginProviderCallback(c *gin.Context) {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	fmt.Println(user)
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"sub":   user.UserID,
@@ -41,7 +41,7 @@ func LoginProviderCallback(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("token -> %s", tokenString)
+	fmt.Printf("token1 -> %s\n", tokenString)
 
 }
 
@@ -77,7 +77,7 @@ func LoginWithProvider(c *gin.Context) {
 			c.String(http.StatusInternalServerError, err.Error())
 			return
 		}
-		fmt.Printf("token -> %s", tokenString)
+		fmt.Printf("token2 -> %s\n", tokenString)
 
 	} else {
 		fmt.Println("niko jap")
