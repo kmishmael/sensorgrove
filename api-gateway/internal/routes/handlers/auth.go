@@ -40,6 +40,16 @@ func LoginProviderCallback(c *gin.Context) {
 		c.String(http.StatusInternalServerError, err.Error())
 		return
 	}
+	// Set the token in a cookie
+	cookie := http.Cookie{
+		Name:     "token",
+		Value:    tokenString,
+		HttpOnly: true,                           // This prevents JavaScript from accessing the cookie
+		Expires:  time.Now().Add(time.Hour * 24), // Set cookie expiry if required
+		Path:     "/",                            // Set the cookie path as needed
+	}
+	
+	http.SetCookie(res, &cookie)
 
 	fmt.Printf("token1 -> %s\n", tokenString)
 
