@@ -48,7 +48,7 @@ func LoginProviderCallback(c *gin.Context) {
 		Expires:  time.Now().Add(time.Hour * 24), // Set cookie expiry if required
 		Path:     "/",                            // Set the cookie path as needed
 	}
-	
+
 	http.SetCookie(res, &cookie)
 
 	fmt.Printf("token1 -> %s\n", tokenString)

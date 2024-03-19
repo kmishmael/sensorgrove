@@ -16,7 +16,7 @@ import (
 func init() {
 	initializers.LoadEnvVariables()
 	initializers.ConnectToDB()
-	//initializers.SyncDatabase()
+	initializers.SyncDatabase()
 }
 
 func main() {
@@ -42,7 +42,7 @@ func main() {
 	routes.RegisterRoutes(r)
 
 
-	r.Run(":3000")
+	r.Run(":8000")
 	log.Println("listening on localhost:3000")
 
 }
