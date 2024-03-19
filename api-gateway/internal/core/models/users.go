@@ -7,7 +7,7 @@ import (
 )
 
 type User struct {
-	ID            string  `json:"id" gorm:"default:uuid_generate_v4()"`
+	ID            string  `json:"id" gorm:"default:gen_random_uuid();"`
 	Email         string  `json:"email" gorm:"index"`
 	Username      *string `json:"username"`
 	Password      string  `json:"password"`
@@ -22,7 +22,7 @@ type User struct {
 }
 
 type Account struct {
-	ID                string  `json:"id" gorm:"default:uuid_generate_v4()"`
+	ID                string  `json:"id" gorm:"default:gen_random_uuid();"`
 	Type              string  `json:"type"`
 	Provider          string  `json:"provider"`
 	ProviderAccountId string  `json:"provider_account_id"`
