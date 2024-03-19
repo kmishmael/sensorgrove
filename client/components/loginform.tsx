@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 interface Props {
   callbackUrl: string;
+  error: string | undefined;
 }
 
 export const LoginForm = (props: Props) => {
@@ -45,45 +47,66 @@ export const LoginForm = (props: Props) => {
   };
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}
-    >
-      <div className="mb-3">
-        <label className="form-label">Email</label>
-        <input
-          type="email"
-          className="form-control form-control-sm"
-          placeholder="Your Email"
-          name="email"
-          required
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </div>
+    <div className="flex justify-center">
+      <div className="border border-gray-600 rounded m-2 w-full sm:w-1/2 lg:w-1/3 px-4 py-6">
+        <h6 className="text-center">Login</h6>
+        {props.error && (
+          <div className="alert alert-danger" role="alert">
+            {props.error}
+          </div>
+        )}
 
-      <div className="mb-3">
-        <label className="form-label">Password</label>
-        <input
-          type="password"
-          className="form-control form-control-sm"
-          placeholder="Password"
-          name="password"
-          required
-          onChange={(e) => setPassword(e.target.value)}
-        />
-      </div>
-
-      <div className="d-grid gap-2">
-        <button
-          className="btn btn-info"
-          type="submit"
-          onSubmit={(e) => e.preventDefault()}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleSubmit();
+          }}
         >
-          Login
-        </button>
+          <div>
+            <div className="mb-2 flex flex-col gap-3">
+              <label className="form-label">Email</label>
+              <input
+                type="email"
+                className="p-2 rounded-lg text-black"
+                placeholder="Your Email"
+                name="email"
+                required
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+
+            <div className="mb-2 flex flex-col gap-3">
+              <label className="form-label">Password</label>
+              <input
+                type="password"
+                className="p-2 rounded-lg text-black"
+                placeholder="Password"
+                name="password"
+                required
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="gap-2">
+              <button
+                className="btn w-full p-2 mt-4 rounded bg-red-600 hover:bg-red-800 btn-info"
+                type="submit"
+                onSubmit={(e) => e.preventDefault()}
+              >
+                Login
+              </button>
+            </div>
+          </div>
+        </form>
+        <div className="flex p-2 text-sm justify-end">
+          <p>
+            Don't have an account?
+            <Link href="/auth/login" className="text-blue-600 hover:underline">
+              Signup
+            </Link>
+          </p>
+        </div>
       </div>
-    </form>
+    </div>
   );
 };

@@ -27,43 +27,15 @@ const Login = ({
 
   return (
     <div>
-      <Head>
-        <title>Login</title>
-      </Head>
       <div>
         <div className="container-fluid mt-4">
           <div className="row d-flex justify-content-center">
             <div className="col-md-4">
               <div className="card p-5">
-                <h6 className="text-center">Login</h6>
-                {searchParams.error && (
-                  <div className="alert alert-danger" role="alert">
-                    {searchParams.error}
-                  </div>
-                )}
-                <LoginForm callbackUrl={searchParams.callbackUrl} />
-                <p className="text-center mt-2">Or</p>
-                <>
-                  {/*
-                <button
-                  className="btn btn-outline-primary"
-                  onClick={handleGoogleLogin}
-                >
-                  <img
-                    src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-32.png"
-                    width="20px"
-                    alt="google-icon"
-                  />
-                  Login with google
-                </button>
-                */}
-                </>
-
-                <hr />
-                <p>
-                  No account? Please <Link href="/auth/signup">Signup</Link>
-                  here
-                </p>
+                <LoginForm
+                  error={searchParams.error}
+                  callbackUrl={searchParams.callbackUrl}
+                />
               </div>
             </div>
           </div>
