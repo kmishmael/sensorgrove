@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      {session ? <>{JSON.stringify(session)}</> : <> Not logged in</>}
+      {session ? <>{JSON.stringify(session.accessToken)}</> : <> Not logged in</>}
     </main>
   );
 }

@@ -6,16 +6,20 @@ export const authOptions: NextAuthOptions = {
         signIn: '/auth/login'
     },
     callbacks: {
-        async jwt({ token, account, profile }) {
-            console.log('jwt ->', token, account, profile)
-            if (account && account.type === "credentials") { //(2)
-                token.userId = account.providerAccountId; // this is Id that coming from authorize() callback 
+        async jwt({ token, user }) {
+            console.log("USER => ", user)
+            if (user) {
+                token.accessToken = (user as any).accessToken;
             }
             return token;
         },
-        async session({ session, token, user }) {
-            console.log('session', session, token, user)
-            session.user.id = token.userId; //(3)
+
+        async session({ session, token }) {
+            session.accessToken = token.accessToken
+            //session.user.id = token.userId as string;
+            //session.user.email = token.email as string;
+            //session.user.name = token.name;
+            //session.accessToken = token.accessToken as string;
             return session;
         },
     },
@@ -35,7 +39,7 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 const user = await authResponse.json()
-
+                console.log('USER =>', user)
                 return user
             },
             credentials: {
