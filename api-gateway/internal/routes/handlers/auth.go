@@ -142,6 +142,13 @@ func LoginWithCredentials(c *gin.Context) {
 		Password string
 	}
 
+	type UserData struct {
+		ID       string  `json:"id"`
+		Name     *string `json:"name"`
+		Email    string  `json:"email"`
+		ImageUrl *string `json:"imageUrl"`
+	}
+
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Failed to read body",
@@ -188,11 +195,18 @@ func LoginWithCredentials(c *gin.Context) {
 		return
 	}
 
+	userData := UserData{
+		Name:     user.Name,
+		Email:    user.Email,
+		ID:       user.ID,
+		ImageUrl: user.ImageUrl,
+	}
+
 	// Respond
 	c.SetSameSite(http.SameSiteLaxMode)
 	c.SetCookie("Authorization", tokenString, 3600*24*30, "", "", false, true)
 
-	c.JSON(http.StatusOK, user)
+	c.JSON(http.StatusOK, userData)
 }
 
 func Validate(c *gin.Context) {
