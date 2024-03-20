@@ -143,10 +143,11 @@ func LoginWithCredentials(c *gin.Context) {
 	}
 
 	type UserData struct {
-		ID       string  `json:"id"`
-		Name     *string `json:"name"`
-		Email    string  `json:"email"`
-		ImageUrl *string `json:"imageUrl"`
+		ID          string  `json:"id"`
+		Name        *string `json:"name"`
+		Email       string  `json:"email"`
+		ImageUrl    *string `json:"imageUrl"`
+		AccessToken string  `json:"accessToken"`
 	}
 
 	if c.Bind(&body) != nil {
@@ -181,8 +182,10 @@ func LoginWithCredentials(c *gin.Context) {
 
 	// Generate a JWT token
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"sub": user.ID,
-		"exp": time.Now().Add(time.Hour * 24 * 30).Unix(),
+		"sub":   user.ID,
+		"name":  user.Name,
+		"email": user.Email,
+		"exp":   time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
@@ -196,10 +199,11 @@ func LoginWithCredentials(c *gin.Context) {
 	}
 
 	userData := UserData{
-		Name:     user.Name,
-		Email:    user.Email,
-		ID:       user.ID,
-		ImageUrl: user.ImageUrl,
+		Name:        user.Name,
+		Email:       user.Email,
+		ID:          user.ID,
+		ImageUrl:    user.ImageUrl,
+		AccessToken: tokenString,
 	}
 
 	// Respond
