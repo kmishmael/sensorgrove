@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kmishmael/sensorgrove/internal/core/models"
 	"github.com/kmishmael/sensorgrove/internal/initializers"
+	"strconv"
 )
 
 // CreateProduct creates a new product
@@ -32,9 +33,18 @@ func GetProducts(c *gin.Context) {
 	page := c.DefaultQuery("page", "1")
 	limit := c.DefaultQuery("limit", "10")
 
-	offset := (page - 1) * limit
+	pageNumber, err := strconv.Atoi(page)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": page + " cannot be parsed as a integer."})
+	}
 
-	result := initializers.DB.Offset(offset).Limit(limit).Find(&products)
+	limitNumber, err := strconv.Atoi(limit)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": limit + " cannot be parsed as an integer."})
+	}
+	offset := (pageNumber - 1) * limitNumber
+
+	result := initializers.DB.Offset(offset).Limit(limitNumber).Find(&products)
 	if result.Error != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products"})
 		return
