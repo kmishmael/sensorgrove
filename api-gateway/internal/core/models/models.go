@@ -57,6 +57,18 @@ type Product struct {
 
 	Inventory ProductInventory `json:"inventory" gorm:"foreignKey:InventoryID"`
 	Discount  Discount         `json:"discount" gorm:"foreignKey:DiscountID"`
+	Images    []ProductImage   `json:"images" gorm:"foreignKey:ProductID"`
+}
+
+type ProductImage struct {
+	ID        string `json:"id" gorm:"primaryKey"`
+	ProductID string `json:"product_id"`
+	URL       string `json:"url"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+
+	Product Product `json:"product" gorm:"foreignKey:ProductID"`
 }
 
 type ProductCategory struct {
@@ -64,6 +76,7 @@ type ProductCategory struct {
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	CreatedAt   time.Time
+	ImageUrl    *string `json:"imageUrl"`
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
 
