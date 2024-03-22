@@ -3,13 +3,14 @@ package tokens
 import (
 	"errors"
 	"fmt"
-	"github.com/golang-jwt/jwt/v5"
+	"os"
 	"time"
+
+	"github.com/golang-jwt/jwt/v5"
 )
 
-const secretKey = "SOME SECRET KEY"
-
 func GenerateToken(email string, userId int64) (string, error) {
+	secretKey := os.Getenv("SECRET")
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email":  email,
 		"userId": userId,
@@ -19,7 +20,8 @@ func GenerateToken(email string, userId int64) (string, error) {
 	return token.SignedString([]byte(secretKey))
 }
 
-func VerifyToken(token string) (int64, error) {
+func VerifyToken(token string) (jwt.MapClaims, error) {
+	secretKey := os.Getenv("SECRET")
 	parsedToken, err := jwt.Parse(token, func(token *jwt.Token) (interface{}, error) {
 		_, ok := token.Method.(*jwt.SigningMethodHMAC)
 
@@ -32,21 +34,20 @@ func VerifyToken(token string) (int64, error) {
 
 	if err != nil {
 		fmt.Println("Could not parse tokens")
-		return 0, errors.New("could not parse tokens")
+		return nil, errors.New("could not parse tokens")
 	}
 
 	tokenIsValid := parsedToken.Valid
 
 	if !tokenIsValid {
-		return 0, errors.New("invalid tokens")
+		return nil, errors.New("invalid tokens")
 	}
 
 	claims, ok := parsedToken.Claims.(jwt.MapClaims)
 
 	if !ok {
-		return 0, errors.New("invalid tokens claims")
+		return nil, errors.New("invalid tokens claims")
 	}
 
-	userId := int64(claims["userId"].(float64))
-	return userId, nil
+	return claims, nil
 }

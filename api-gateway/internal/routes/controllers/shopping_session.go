@@ -26,6 +26,8 @@ func CreateShoppingSession(c *gin.Context) {
 }
 
 // GetShoppingSessions retrieves a list of shopping sessions
+
+// @suspended
 func GetShoppingSessions(c *gin.Context) {
 	var shoppingSessions []models.ShoppingSession
 

@@ -26,6 +26,7 @@ func CreateCartItem(c *gin.Context) {
 }
 
 // GetCartItems retrieves a list of cart items
+// suspended fuction - no particular use at the moment
 func GetCartItems(c *gin.Context) {
 	var cartItems []models.CartItem
 
@@ -41,7 +42,7 @@ func GetCartItems(c *gin.Context) {
 // GetCartItemByID retrieves a single cart item by ID
 func GetCartItemByID(c *gin.Context) {
 	var cartItem models.CartItem
-	id := c.Param("id")
+	id := c.Param("cartId")
 
 	result := initializers.DB.First(&cartItem, id)
 	if result.Error != nil {
@@ -55,7 +56,7 @@ func GetCartItemByID(c *gin.Context) {
 // UpdateCartItem updates an existing cart item
 func UpdateCartItem(c *gin.Context) {
 	var cartItem models.CartItem
-	id := c.Param("id")
+	id := c.Param("cartId")
 
 	if err := c.ShouldBindJSON(&cartItem); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -74,7 +75,7 @@ func UpdateCartItem(c *gin.Context) {
 // DeleteCartItem deletes a cart item by ID
 func DeleteCartItem(c *gin.Context) {
 	var cartItem models.CartItem
-	id := c.Param("id")
+	id := c.Param("cartId")
 
 	result := initializers.DB.Delete(&cartItem, id)
 	if result.Error != nil {
