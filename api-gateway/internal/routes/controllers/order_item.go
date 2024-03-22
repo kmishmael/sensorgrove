@@ -41,7 +41,7 @@ func GetOrderItems(c *gin.Context) {
 // GetOrderItemByID retrieves a single order item by ID
 func GetOrderItemByID(c *gin.Context) {
 	var orderItem models.OrderItem
-	id := c.Param("id")
+	id := c.Param("itemId")
 
 	result := initializers.DB.First(&orderItem, id)
 	if result.Error != nil {
@@ -55,7 +55,7 @@ func GetOrderItemByID(c *gin.Context) {
 // UpdateOrderItem updates an existing order item
 func UpdateOrderItem(c *gin.Context) {
 	var orderItem models.OrderItem
-	id := c.Param("id")
+	id := c.Param("itemId")
 
 	if err := c.ShouldBindJSON(&orderItem); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -74,7 +74,7 @@ func UpdateOrderItem(c *gin.Context) {
 // DeleteOrderItem deletes an order item by ID
 func DeleteOrderItem(c *gin.Context) {
 	var orderItem models.OrderItem
-	id := c.Param("id")
+	id := c.Param("itemId")
 
 	result := initializers.DB.Delete(&orderItem, id)
 	if result.Error != nil {
