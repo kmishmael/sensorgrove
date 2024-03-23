@@ -41,7 +41,6 @@ func main() {
 
 	routes.RegisterRoutes(r)
 
-
 	r.Run(":8000")
 	log.Println("listening on localhost:3000")
 

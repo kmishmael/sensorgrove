@@ -7,6 +7,7 @@ import (
 )
 
 type User struct {
+	gorm.Model
 	ID            string  `json:"id" gorm:"default:gen_random_uuid();"`
 	Email         string  `json:"email" gorm:"index"`
 	Password      string  `json:"password"`

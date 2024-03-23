@@ -1,0 +1,28 @@
+definitions:
+  dto.LoginData:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: login with email and password
+      parameters:
+      - description: login data
+        in: body
+        name: loginData
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginData'
+      produces:
+      - application/json
+      responses: {}
+      summary: Login
+swagger: "2.0"
