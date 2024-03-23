@@ -4,11 +4,16 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/kmishmael/sensorgrove/internal/routes/controllers"
 	"github.com/kmishmael/sensorgrove/internal/routes/middlewares"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
+	_ "github.com/kmishmael/sensorgrove/docs"
 )
 
 func RegisterRoutes(server *gin.Engine) {
 
 	server.Use(middlewares.ConfigureCORS())
+
+	server.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	server.GET("/auth/:provider/callback", controllers.LoginProviderCallback)
 	server.GET("/auth/:provider", controllers.LoginWithProvider)
@@ -59,11 +64,11 @@ func RegisterRoutes(server *gin.Engine) {
 	server.DELETE("orders/:id/items/:itemId", middlewares.Authenticate, controllers.DeleteOrderItem)
 
 	// PAYMENT DETAILS
-	server.POST("/user-payments", middlewares.Authenticate, controllers.CreatePaymentDetails)
-	server.GET("/user-payments", middlewares.Authenticate, controllers.GetPaymentDetails)
-	server.GET("/user-payments/:id", middlewares.Authenticate, controllers.GetPaymentDetailsByID)
-	server.PUT("/user-payments/:id", middlewares.Authenticate, controllers.UpdatePaymentDetails)
-	server.DELETE("user-payments/:id", middlewares.Authenticate, controllers.DeletePaymentDetails)
+	server.POST("/user-payments-details", middlewares.Authenticate, controllers.CreatePaymentDetails)
+	server.GET("/user-payments-details", middlewares.Authenticate, controllers.GetPaymentDetails)
+	server.GET("/user-payments-details/:id", middlewares.Authenticate, controllers.GetPaymentDetailsByID)
+	server.PUT("/user-payments-details/:id", middlewares.Authenticate, controllers.UpdatePaymentDetails)
+	server.DELETE("user-payments-details/:id", middlewares.Authenticate, controllers.DeletePaymentDetails)
 
 	// PRODUCT CATEGORY
 	server.POST("/product-categories", middlewares.Authenticate, controllers.CreateProductCategory)

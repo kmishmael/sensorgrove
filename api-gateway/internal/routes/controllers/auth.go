@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/kmishmael/sensorgrove/internal/core/dto"
 	"github.com/kmishmael/sensorgrove/internal/core/models"
 	"github.com/kmishmael/sensorgrove/internal/initializers"
 	"github.com/markbates/goth/gothic"
@@ -135,12 +136,18 @@ func SignupWithCredentials(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "true", "message": "account creation successful"})
 }
 
+// Login with Email and Password
+// @Summary Login
+// @Description login with email and password
+// @Accept json
+// @Produce json
+// @Router /login [post]
+// @Param loginData body dto.LoginData  true "login data" ""
 func LoginWithCredentials(c *gin.Context) {
 	// Get email & pass off req body
-	var body struct {
-		Email    string
-		Password string
-	}
+	// @Param loginData body dto.LoginData  true "login data"
+
+	var body dto.LoginData
 
 	type UserData struct {
 		ID          string  `json:"id"`
