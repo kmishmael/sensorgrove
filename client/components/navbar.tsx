@@ -9,13 +9,16 @@ export default function NavBar() {
       <div className="w-full px-20 py-4 flex justify-between">
         <div className="flex gap-3 items-center">
           <div className="p-2 rounded-md bg-primary2">
-            <BiMenuAltLeft className="h-8 w-8 text-primary" />
+            <BiMenuAltLeft className="h-6 w-6 text-primary" />
           </div>
-          <h1 className="text-primary font-bold text-2xl">MegaMart</h1>
+          <h1 className="text-primary font-bold text-xl">MegaMart</h1>
         </div>
         <Search />
-        <Account />
-        <Cart />
+        <div className="flex gap-5 px-2 items-center">
+          <Account />
+          <div className="h-1/2 border-r border-2"></div>
+          <Cart />
+        </div>
       </div>
     </>
   );

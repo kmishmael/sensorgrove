@@ -7,7 +7,6 @@ export const authOptions: NextAuthOptions = {
     },
     callbacks: {
         async jwt({ token, user }) {
-            console.log("USER => ", user)
             if (user) {
                 token.accessToken = (user as any).accessToken;
             }
@@ -39,7 +38,7 @@ export const authOptions: NextAuthOptions = {
                 }
 
                 const user = await authResponse.json()
-                console.log('USER =>', user)
+              
                 return user
             },
             credentials: {
