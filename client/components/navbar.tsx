@@ -6,7 +6,7 @@ import Cart from "./cart";
 export default function NavBar() {
   return (
     <>
-      <div className="w-full px-20 py-4 flex justify-between">
+      <div className="w-full py-4 flex justify-between">
         <div className="flex gap-3 items-center">
           <div className="p-2 rounded-md bg-primary2">
             <BiMenuAltLeft className="h-6 w-6 text-primary" />

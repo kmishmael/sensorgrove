@@ -12,7 +12,7 @@ const data = [
 ];
 export default function CategoriesButtons() {
   return (
-    <div className="border-t flex justify-between border-b py-2 px-20">
+    <div className="border-t flex justify-between border-b py-2">
       {data.map((d) => (
         <>
           <ButtonDrop title={d.text} />
