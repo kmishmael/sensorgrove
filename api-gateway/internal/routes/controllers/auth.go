@@ -160,7 +160,7 @@ func LoginWithCredentials(c *gin.Context) {
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Failed to read body",
-		})
+			})
 
 		return
 	}
