@@ -11,5 +11,5 @@ FROM alpine:latest AS runner
 RUN mkdir /app
 WORKDIR /app
 COPY --from=builder /app .
-EXPOSE 8080
+EXPOSE 8000
 ENTRYPOINT ["./app"]
