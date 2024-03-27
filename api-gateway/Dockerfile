@@ -10,6 +10,6 @@ RUN go build -o ./tmp ./cmd/server
 FROM alpine:latest AS runner
 RUN mkdir /app
 WORKDIR /app
-COPY --from=builder /app/app .
+COPY --from=builder /app .
 EXPOSE 8080
 ENTRYPOINT ["./app"]
