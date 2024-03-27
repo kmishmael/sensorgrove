@@ -30,10 +30,33 @@ export default async function Page() {
             </div>
             <div className="flex-1">
               <CategoryBar />
+
+              <div className="p-4 grid grid-cols-3 gap-4">
+                {[1, 2, 4, 5].map((d) => (
+                  <>
+                    <div
+                      key={d}
+                      className="flex flex-col gap-2 w-full border p-4 rounded-lg shadow-md"
+                    >
+                      <div className="h-44 flex justify-center">
+                        <img className="" src="/iphone.png" alt="" />
+                      </div>
+                      <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
+                      <div>
+                        <h3>Iphone 14 promax 256gb</h3>
+                      </div>
+                      <div>
+                        <p>$930.90</p>
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </div>
+
       <br />
       <br />
     </div>
