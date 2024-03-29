@@ -3,8 +3,11 @@ import ProductGallery from "@/components/gallery";
 import NavBar from "@/components/navbar";
 import ProductTitle from "@/components/product";
 import ProductDescription from "@/components/product-description";
+import ProductReviews from "@/components/product-reviews";
 import { RiArrowRightSLine } from "react-icons/ri";
-import { Tab } from "@headlessui/react";
+import SimilarProducts from "@/components/similar-products";
+import LikelyProducts from "@/components/likely-products";
+import RecentlyViewedProducts from "@/components/recently-viewed";
 
 export default function Page() {
   return (
@@ -26,20 +29,16 @@ export default function Page() {
           </div>
         </div>
 
-        <div className="px-20 mt-6 bg-gray-50">
-          <Tab.Group>
-            <Tab.List>
-              <Tab>Tab 1</Tab>
-              <Tab>Tab 2</Tab>
-              <Tab>Tab 3</Tab>
-            </Tab.List>
-            <Tab.Panels>
-              <Tab.Panel>Content 1</Tab.Panel>
-              <Tab.Panel>Content 2</Tab.Panel>
-              <Tab.Panel>Content 3</Tab.Panel>
-            </Tab.Panels>
-          </Tab.Group>
-          <ProductDescription />
+        <div className="px-20 mt-6 grid grid-cols-12 gap-2 bg-gray-50">
+          <div className="col-span-9 flex flex-col gap-5">
+            <ProductDescription />
+            <ProductReviews />
+            <SimilarProducts />
+            <RecentlyViewedProducts />
+          </div>
+          <div className="col-span-3">
+            <LikelyProducts />
+          </div>
         </div>
       </div>
 

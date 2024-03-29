@@ -4,7 +4,7 @@ export default function ProductDescription() {
       <div className="p-4 bg-white border rounded-md border-sky-300">
         <div className="py-1">
           <p className="font-bold text-lg text-sky-800 uppercase">
-            Description
+            Product Description
           </p>
         </div>
         <div className="py-1">
