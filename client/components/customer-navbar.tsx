@@ -10,8 +10,9 @@ import { IoIosNotificationsOutline } from "react-icons/io";
 import { MdOutlineSecurity } from "react-icons/md";
 import { CiLogout } from "react-icons/ci";
 import { usePathname } from "next/navigation";
+import { PiAddressBook } from "react-icons/pi";
 
-const LINKS = [
+export const LINKS = [
   { slug: "personal-data", name: "Personal Data", icon: RxAvatar },
   { slug: "orders", name: "Orders", icon: PiBagThin },
   { slug: "wishlist", name: "Wish list", icon: IoIosHeartEmpty },
@@ -21,6 +22,11 @@ const LINKS = [
     slug: "notification",
     name: "Notification",
     icon: IoIosNotificationsOutline,
+  },
+  {
+    slug: "address",
+    name: "Address Book",
+    icon: PiAddressBook,
   },
   {
     slug: "security-access",
