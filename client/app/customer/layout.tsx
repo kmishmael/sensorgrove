@@ -9,8 +9,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // @ts-expect-error
-  const pathname = headers.get('x-pathname');
+  //const headersList = headers();
+
+ // const pathname = headersList.get("x-pathname")?.split("/")[2] || "";
 
   return (
     <>
@@ -21,7 +22,6 @@ export default function RootLayout({
       <div className="px-20 py-2 gap-4 grid grid-cols-12">
         <CustomerNavBar className="col-span-3" />
         <div className="col-span-9 p-2">
-          {pathname}
           {children}
         </div>
       </div>
