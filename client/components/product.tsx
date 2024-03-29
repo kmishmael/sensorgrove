@@ -17,15 +17,17 @@ export default function ProductTitle() {
       <div className="flex font-bold text-primary text-2xl">
         <p>$125</p>
       </div>
-
+      <div className="flex w-fit items-center gap-8 rounded-md py-1 px-3 bg-sky-100">
+        <button className="font-bold text-2xl text-primary">-</button>
+        <span className="font-bold text-xl">0</span>
+        <button className="font-bold text-2xl text-primary">+</button>
+      </div>
       <div className="flex flex-row gap-4">
-        <div className="flex items-center gap-8 rounded-md py-1 px-3 bg-sky-100">
-          <button className="font-bold text-2xl text-primary">-</button>
-          <span className="font-bold text-xl">0</span>
-          <button className="font-bold text-2xl text-primary">+</button>
-        </div>
         <button className="outline-none rounded-md font-semibold text-xl px-4 py-1 bg-primary text-white">
           Add to Cart
+        </button>
+        <button className="outline-none rounded-md font-semibold text-xl px-4 py-1 bg-primary text-white">
+          Buy Now
         </button>
       </div>
     </div>
