@@ -47,22 +47,22 @@ export default function CustomerNavBar({ className }: { className?: string }) {
         {LINKS.map((link) => (
           <>
             <Link
-              className={`flex flex-row items-center hover:text-primary gap-3 rounded-md p-2 text-sm text-neutral-800 font-normal ${
+              className={`flex flex-row items-center hover:text-primary gap-5 rounded-md p-2 text-sm text-neutral-900 font-normal ${
                 link.slug == activeLink ? "bg-sky-100 text-primary" : ""
               }`}
               href={`/customer/${link.slug}`}
             >
               {<link.icon className="h-5 w-5" />}
-              <p className=" text-lg">{link.name}</p>
+              <p className="text-sm font-medium">{link.name}</p>
             </Link>
           </>
         ))}
         <Link
-          className={`flex flex-row items-center hover:text-primary gap-3 rounded-md p-3 font-normal`}
+          className={`flex flex-row items-center hover:text-primary gap-3 rounded-md p-3 text-neutral-900 font-normal`}
           href={`/logout`}
         >
           <CiLogout className="h-5 w-5" />
-          <p className=" text-lg">Logout</p>
+          <p className="text-sm font-medium">Logout</p>
         </Link>
       </div>
     </div>

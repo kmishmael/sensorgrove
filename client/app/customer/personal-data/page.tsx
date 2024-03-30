@@ -1,5 +1,5 @@
 import { User, Edit, Direct, Call, Key, Home2 } from "iconsax-react";
-import PersonalDataDialog from "@/components/dialog/personal-data/personal-data";
+import { PersonalDataDialog } from "@/components/dialog/personal-data/personal-data";
 import { Suspense } from "react";
 
 export default function Page() {
@@ -8,9 +8,9 @@ export default function Page() {
       <div className="p-2">
         <h2 className="font-medium text-xl">Identification</h2>
         <br />
-        <Suspense>
+        {/* <Suspense>
           <PersonalDataDialog />
-        </Suspense>
+        </Suspense> */}
 
         <div className="grid grid-cols-2 gap-5">
           <div className="flex flex-col gap-2">
