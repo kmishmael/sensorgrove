@@ -33,7 +33,7 @@ export default async function Page() {
 
               <div className="p-4 grid grid-cols-3 gap-4">
                 {[1, 2, 4, 5].map((d) => (
-                  <>
+                  
                     <div
                       key={d}
                       className="flex flex-col gap-2 w-full border p-4 rounded-lg shadow-md"
@@ -49,7 +49,7 @@ export default async function Page() {
                         <p>$930.90</p>
                       </div>
                     </div>
-                  </>
+                  
                 ))}
               </div>
             </div>

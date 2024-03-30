@@ -138,8 +138,8 @@ export default function Page() {
               </div>
               <div className="py-1 mt-2 grid grid-cols-4 gap-5">
                 {[1, 2, 3, 4].map((d) => (
-                  <>
-                    <div className="flex flex-col gap-2 p-4">
+                  
+                    <div key={d} className="flex flex-col gap-2 p-4">
                       <div className="h-44 flex justify-center bg-sky-100 rounded-lg">
                         <img className="" src="/laptop-showcase.png" alt="" />
                       </div>
@@ -156,7 +156,7 @@ export default function Page() {
                       </div>
                       <div></div>
                     </div>
-                  </>
+                  
                 ))}
               </div>
             </div>

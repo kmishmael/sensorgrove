@@ -12,8 +12,8 @@ export default function Page() {
         <br />
         <div className="grid grid-cols-3 gap-5">
           {[1, 2, 3, 4, 5, 6, 7].map((d) => (
-            <>
-              <div className="flex flex-col gap-2 p-4">
+            
+              <div key={d} className="flex flex-col gap-2 p-4">
                 <div className="h-44 flex justify-center bg-sky-100 rounded-lg">
                   <img className="" src="/laptop-showcase.png" alt="" />
                 </div>
@@ -35,7 +35,7 @@ export default function Page() {
                 </div>
                 <div></div>
               </div>
-            </>
+            
           ))}
         </div>
       </div>

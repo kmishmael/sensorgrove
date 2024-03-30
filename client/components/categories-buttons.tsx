@@ -14,9 +14,9 @@ export default function CategoriesButtons() {
   return (
     <div className="border-t flex justify-between border-b py-2">
       {data.map((d) => (
-        <>
+        <div key={d.text}>
           <ButtonDrop title={d.text} />
-        </>
+        </div>
       ))}
     </div>
   );
