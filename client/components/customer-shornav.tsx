@@ -10,7 +10,7 @@ export default function CustomerShortNav() {
   let name = LINKS.filter((c) => c.slug === activeLink)[0];
   return (
     <>
-      <div className="flex px-20 flex-row items-center gap-2 py-4 text-neutral-400">
+      <div className="flex px-20 text-sm flex-row items-center gap-2 py-4 text-neutral-400">
         <Link
           href="/"
           className="hover:text-primary underline-offset-4 hover:underline"
