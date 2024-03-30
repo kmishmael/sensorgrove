@@ -20,8 +20,8 @@ export default function FeaturedProducts() {
       </div>
       <div className="flex border w-full gap-5 flex-row">
         {[1, 2, 3, 4].map((d) => (
-          <>
-            <div className="flex border bg-white rounded-md w-1/4  flex-col">
+          
+            <div key={d} className="flex border bg-white rounded-md w-1/4  flex-col">
               <img
                 src="./smartphone.png"
                 className="object-contain h-52 border"
@@ -34,7 +34,7 @@ export default function FeaturedProducts() {
                 </div>
               </div>
             </div>
-          </>
+          
         ))}
       </div>
     </div>

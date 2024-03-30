@@ -12,7 +12,7 @@ export default function RatingDistribution({
     <>
       <div className="flex flex-col gap-2">
         {[5, 4, 3, 2, 1].map((d) => (
-          <>
+          
             <div key={d} className="flex items-center gap-3">
               <a
                 href="#"
@@ -28,7 +28,7 @@ export default function RatingDistribution({
                 ></div>
               </div>
             </div>
-          </>
+          
         ))}
       </div>
     </>
