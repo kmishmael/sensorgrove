@@ -2,11 +2,11 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	_ "github.com/kmishmael/sensorgrove/docs"
 	"github.com/kmishmael/sensorgrove/internal/routes/controllers"
 	"github.com/kmishmael/sensorgrove/internal/routes/middlewares"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger" // gin-swagger middleware
-	_ "github.com/kmishmael/sensorgrove/docs"
 )
 
 func RegisterRoutes(server *gin.Engine) {
@@ -22,6 +22,7 @@ func RegisterRoutes(server *gin.Engine) {
 	server.POST("/signup", controllers.SignupWithCredentials)
 	server.POST("/login", controllers.LoginWithCredentials)
 	server.GET("/validate", middlewares.Authenticate, controllers.Validate)
+	server.GET("/users", middlewares.Authenticate, controllers.GetUser)
 
 	// PRODUCTS
 	server.POST("/products", middlewares.Authenticate, controllers.CreateProduct)

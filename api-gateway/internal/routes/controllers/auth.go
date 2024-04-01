@@ -111,6 +111,17 @@ func SignupWithCredentials(c *gin.Context) {
 		return
 	}
 
+	var userData models.User
+
+	initializers.DB.Where("email = ?", body.Email).First(&userData)
+
+	if userData.ID != "" {
+		c.JSON(http.StatusConflict, gin.H{
+			"error": "Email Already in use",
+		})
+		return
+	}
+
 	// Hash the password
 	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
 
@@ -169,7 +180,7 @@ func LoginWithCredentials(c *gin.Context) {
 	// Look up for requested user
 	var user models.User
 
-	initializers.DB.First(&user, "email = ?", body.Email)
+	//initializers.DB.First(&user, "email = ?", body.Email)
 	initializers.DB.Where("email = ? AND provider = ?", body.Email, "credentials").First(&user)
 
 	if user.ID == "" {
