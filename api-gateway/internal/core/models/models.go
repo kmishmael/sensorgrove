@@ -8,18 +8,19 @@ import (
 
 type User struct {
 	gorm.Model
-	ID            string  `json:"id" gorm:"default:gen_random_uuid();"`
-	Email         string  `json:"email" gorm:"index"`
-	Password      string  `json:"password"`
-	Name          *string `json:"name"`
-	Telephone     *string `json:"telephone"`
-	EmailVerified bool    `json:"email_verified" gorm:"default:false"`
-	ImageUrl      *string `json:"image"`
-	AvatarUrl     *string `json:"avatar_url"`
-	CreatedAt     time.Time
-	UpdatedAt     time.Time
-	DeletedAt     gorm.DeletedAt `gorm:"index"`
-
+	ID              string  `json:"id" gorm:"default:gen_random_uuid();"`
+	Email           string  `json:"email" gorm:"index"`
+	Password        *string `json:"password"`
+	Name            *string `json:"name"`
+	Telephone       *string `json:"telephone"`
+	Provider        string  `json:"provider" gorm:"varchar(255)" gorm:"default:credentials"`
+	Role            string  `json:"role" gorm:"varchar(255)" gorm:"default:USER"`
+	EmailVerified   bool    `json:"email_verified" gorm:"default:false"`
+	ImageUrl        *string `json:"image"`
+	AvatarUrl       *string `json:"avatar_url"`
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+	DeletedAt       gorm.DeletedAt  `gorm:"index"`
 	Address         UserAddress     `json:"address" gorm:"foreignKey:UserID"`
 	Payments        []UserPayment   `json:"payments" gorm:"foreignKey:UserID"`
 	Orders          []OrderDetails  `json:"orders" gorm:"foreignKey:UserID"`
@@ -28,9 +29,10 @@ type User struct {
 
 type Account struct {
 	ID                string  `json:"id" gorm:"default:gen_random_uuid();"`
-	Type              string  `json:"type"`
-	Provider          string  `json:"provider"`
-	ProviderAccountId string  `json:"provider_account_id"`
+	UserId            int64   `json:"userId" gorm:"int"`
+	Type              string  `json:"type" gorm:"varchar(255)"`
+	Provider          string  `json:"provider" gorm:"varchar(255)"`
+	ProviderAccountId string  `json:"providerAccountId" gorm:"varchar(255)"`
 	RefreshToken      *string `json:"refresh_token"`
 	AccessToken       *string `json:"access_token"`
 	ExpiresAt         *string `json:"expires_at"`

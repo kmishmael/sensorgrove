@@ -17,6 +17,7 @@ func RegisterRoutes(server *gin.Engine) {
 
 	server.GET("/auth/:provider/callback", controllers.LoginProviderCallback)
 	server.GET("/auth/:provider", controllers.LoginWithProvider)
+	server.POST("/account", controllers.CreateAccount)
 
 	server.POST("/signup", controllers.SignupWithCredentials)
 	server.POST("/login", controllers.LoginWithCredentials)
