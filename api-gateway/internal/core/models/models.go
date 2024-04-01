@@ -13,8 +13,8 @@ type User struct {
 	Password        *string `json:"password"`
 	Name            *string `json:"name"`
 	Telephone       *string `json:"telephone"`
-	Provider        string  `json:"provider" gorm:"varchar(255)" gorm:"default:credentials"`
-	Role            string  `json:"role" gorm:"varchar(255)" gorm:"default:USER"`
+	Provider        string  `json:"provider" gorm:"varchar(255);default:credentials"`
+	Role            string  `json:"role" gorm:"varchar(255);default:USER"`
 	EmailVerified   bool    `json:"email_verified" gorm:"default:false"`
 	ImageUrl        *string `json:"image"`
 	AvatarUrl       *string `json:"avatar_url"`
@@ -29,7 +29,6 @@ type User struct {
 
 type Account struct {
 	ID                string  `json:"id" gorm:"default:gen_random_uuid();"`
-	UserId            int64   `json:"userId" gorm:"int"`
 	Type              string  `json:"type" gorm:"varchar(255)"`
 	Provider          string  `json:"provider" gorm:"varchar(255)"`
 	ProviderAccountId string  `json:"providerAccountId" gorm:"varchar(255)"`

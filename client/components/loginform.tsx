@@ -25,7 +25,6 @@ export const LoginForm = (props: Props) => {
 
     const res = await signIn("credentials", {
       ...data,
-      callbackUrl: getLoginSuccessRedirectUrl(),
       redirect: false,
     });
 
@@ -58,6 +57,8 @@ export const LoginForm = (props: Props) => {
     const res = await signIn("google", {
       callbackUrl: getLoginSuccessRedirectUrl(),
       redirect: false,
+    }).catch((error: any) => {
+      console.log(error)
     });
 
     if (res) {
