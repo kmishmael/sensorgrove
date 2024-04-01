@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from 'next-auth/providers/google'
 import { NextAuthOptions } from 'next-auth';
+import axios from '@/lib/axios/public'
 
 export const authOptions: NextAuthOptions = {
     pages: {
@@ -21,45 +22,46 @@ export const authOptions: NextAuthOptions = {
             //session.accessToken = token.accessToken as string;
             return session;
         },
+        /*
         async signIn({ user, account, profile, email, credentials }) {
-            console.log('USER => ',user)
-            console.log('ACCOUNT => ',account)
-            console.log('PROFILE => ',profile)
+
+            if (account?.provider == 'credentials') {
+                return true
+            }
+            else if (account?.provider == 'google') {
+                const res = await axios.post('/users', { email: profile?.email })
+                console.log('response=> ', res.status)
+                console.log('resdata => ', res.data)
+
+                axios.post('/account', {
+                    userId: account.userId,
+                    type: account.type,
+                    provider: account.provider,
+                    providerAccountId: account.providerAccountId,
+                    refresh_token: account.refresh_token,
+                    access_token: account.access_token,
+                    expires_at: account.expires_at,
+                    token_type: account.token_type,
+                    scope: account.scope,
+                    id_token: account.id_token,
+                })
+
+                return true
+            }
+
+            console.log('USER => ', user)
+            console.log('ACCOUNT => ', account)
+            console.log('PROFILE => ', profile)
             console.log('EMAIL => ', email)
-            console.log('CREDENTIALS => ',credentials)
+            console.log('CREDENTIALS => ', credentials)
             return true
         },
+        */
     },
-    // async signIn(user, account, profile) {
-    //     // Handle response from Go backend (user info and session identifier)
-    //     const response = await fetch("https://your-go-backend.com/api/get-session", {
-    //         method: "POST",
-    //         body: JSON.stringify({ accessToken: account.accessToken }),
-    //     });
-    //     const sessionData = await response.json();
-
-    //     if (sessionData.success) {
-    //         return {
-    //             user: {
-    //                 // Extract user information from sessionData
-    //                 id: sessionData.user.id,
-    //                 name: sessionData.user.name,
-    //                 email: sessionData.user.email,
-    //                 // ...other user details
-    //             },
-    //             session: {
-    //                 accessToken: sessionData.accessToken, // Or other session identifier
-    //             },
-    //         };
-    //     } else {
-    //         // Handle login failure
-    //         throw new Error("Failed to create session");
-    //     }
-    // },
     providers: [
         CredentialsProvider({
             async authorize(credentials: any) {
-                const authResponse = await fetch(process.env.API_URL + "login", {
+                const authResponse = await fetch(process.env.API_URL + "/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -82,13 +84,10 @@ export const authOptions: NextAuthOptions = {
         GoogleProvider({
             clientId: process.env.GOOGLE_AUTH_CLIENT_ID || '',
             clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET || '',
-            authorization: {
-                url: "https://sensorgrove-api-kmishmael.koyeb.app/auth/google",
-            },
         }),
 
     ],
-    secret: process.env.SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: 'jwt',
         maxAge: 30 * 24 * 60 * 60, // 30 Days
