@@ -1,6 +1,6 @@
 import CategoriesButtons from "@/components/categories-buttons";
 import NavBar from "@/components/navbar";
-import { Edit } from "iconsax-react";
+import { Edit, Add } from "iconsax-react";
 
 export default function Page() {
   return (
@@ -13,64 +13,55 @@ export default function Page() {
         <div className="px-20 py-20 gap-6 grid grid-cols-12">
           <div className="h-fit col-span-8">
             <div className="p-4 border border-gray-200 rounded-md">
-              <div className="flex flex-col gap-2">
-                <h3 className="font-semibold text-lg text-neutral-700">
-                  Shipping address
-                </h3>
-                <div className="flex justify-between p-4 rounded-md items-center bg-neutral-200">
-                  <p className="text-xs">
-                    HubSpot, 25 First Street, Cambridge MA 02141, United States
-                  </p>
-                  <Edit className="h-6 w-6 text-blue-600" />
+              <div className="flex flex-col gap-8">
+                <div className="flex flex-col gap-3">
+                  <h3 className="font-semibold text-lg text-neutral-700">
+                    Payment
+                  </h3>
+                  <div className="flex flex-col gap-5">
+                    <div className="gap-3 flex flex-row">
+                      <button className="flex flex-1 justify-between p-2 gap-4 font-light rounded-md items-center border border-blue-500 bg-blue-100">
+                        <div className="h-full py-1 px-2 flex items-center justify-center">
+                          <div className="h-5 w-5 border-2 rounded-full flex flex-row border-blue-600 items-center justify-center">
+                            <div className="h-3 w-3 rounded-full bg-blue-600"></div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col flex-1 items-start justify-start">
+                          <p className="font-light">Credit/Debit Cards</p>
+                        </div>
+                        <div className="flex flex-col items-end text-xs h-full justify-end">
+                          <Edit className="h-6 w-6 text-blue-600" />
+                        </div>
+                      </button>
+                      <button className="text-blue-600 py-2 px-3 bg-blue-100 rounded-md transition-colors duration-150 ease-in hover:text-white hover:bg-blue-600">
+                        <Add className="h-6 w-6" />
+                      </button>
+                    </div>
+                    <div className="gap-3 flex flex-row">
+                      <button className="flex flex-1 justify-between p-2 gap-4 font-light rounded-md items-center border border-blue-500 bg-blue-100">
+                        <div className="h-full py-1 px-2 flex items-center justify-center">
+                          <div className="h-5 w-5 border-2 rounded-full flex flex-row border-blue-600 items-center justify-center">
+                            <div className="h-3 w-3 rounded-full bg-blue-600"></div>
+                          </div>
+                        </div>
+                        <div className="flex flex-col flex-1 items-start justify-start">
+                          <p className="font-light">Paypal</p>
+                        </div>
+                        <div className="flex flex-col items-end text-xs h-full justify-end">
+                          <Edit className="h-6 w-6 text-blue-600" />
+                        </div>
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div className="flex flex-col gap-3">
-                <h3 className="font-semibold text-lg text-neutral-700">
-                  Shipping Method
-                </h3>
-                <div className="flex flex-col gap-5">
-                  <button className="flex justify-between p-2 gap-4 font-light rounded-md items-center bg-neutral-200">
-                    <div className="h-full py-1 flex items-start">
-                      <div className="h-5 w-5 border-2 rounded-full flex flex-row border-gray-500 items-center justify-center">
-                        <div className="h-3 w-3 rounded-full bg-transparent"></div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col flex-1 items-start justify-start">
-                      <p className="font-light">Free Shipping</p>
-                      <p className="text-neutral-600">7-30 business days</p>
-                    </div>
-                    <div className="flex flex-col items-end text-xs h-full justify-end">
-                      <p>KSH 750</p>
-                    </div>
-                  </button>
-                  <button className="flex justify-between p-2 gap-4 font-light rounded-md items-center bg-neutral-200">
-                    <div className="h-full py-1 flex items-start">
-                      <div className="h-5 w-5 border-2 rounded-full flex flex-row border-gray-500 items-center justify-center">
-                        <div className="h-3 w-3 rounded-full bg-transparent"></div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col flex-1 items-start justify-start">
-                      <p className="font-light">Free Shipping</p>
-                      <p className="text-neutral-600">7-30 business days</p>
-                    </div>
-                    <div className="flex flex-col items-end text-xs h-full justify-end">
-                      <p>KSH 750</p>
-                    </div>
-                  </button>
-                  <button className="flex justify-between p-2 gap-4 font-light rounded-md items-center border border-blue-500 bg-blue-100">
-                    <div className="h-full py-1 flex items-start">
-                      <div className="h-5 w-5 border-2 rounded-full flex flex-row border-blue-600 items-center justify-center">
-                        <div className="h-3 w-3 rounded-full bg-blue-600"></div>
-                      </div>
-                    </div>
-                    <div className="flex flex-col flex-1 items-start justify-start">
-                      <p className="font-light">Free Shipping</p>
-                      <p className="text-neutral-600">7-30 business days</p>
-                    </div>
-                    <div className="flex flex-col items-end text-xs h-full justify-end">
-                      <p>KSH 750</p>
-                    </div>
-                  </button>
+                <div className="flex flex-col gap-2">
+                  <h3 className="font-semibold text-lg text-neutral-700">
+                    Billing Address
+                  </h3>
+                  <div className="flex justify-between p-4 rounded-md items-center bg-neutral-200">
+                    <p className="text-sm">Same as shipping address</p>
+                    <Edit className="h-6 w-6 text-blue-600" />
+                  </div>
                 </div>
               </div>
             </div>
@@ -79,7 +70,7 @@ export default function Page() {
                 href="#"
                 className="font-normal text-blue-600 hover:underline underline-offset-4"
               >
-                Return to cart
+                Return to checkout
               </a>
             </div>
           </div>
@@ -140,7 +131,7 @@ export default function Page() {
 
               <div className="py-4">
                 <button className="text-center font-semibold text-sm w-full py-2 px-4 rounded-md bg-primary hover:bg-sky-800 text-white">
-                  Continue to pay
+                  Place order
                 </button>
               </div>
             </div>

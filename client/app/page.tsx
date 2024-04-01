@@ -8,7 +8,7 @@ import Carousel from "@/components/carousel";
 import LandingSnippet from "@/components/layouts/landing-snippet";
 import { RiAppleFill } from "react-icons/ri";
 import FeaturedProducts from "@/components/featured";
-
+import SignOut from "@/components/signout";
 // import { useSession } from 'next-auth/react';
 //   const { data: session, status } = useSession();
 
@@ -25,9 +25,16 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <main className="min-h-screen px-20">
+      {session ? (
+        <>{JSON.stringify(session)}</>
+      ) : (
+        <> Not logged in</>
+      )}
+
       <NavBar />
       <CategoriesButtons />
       <Carousel data={[] as any} />
+      <SignOut />
       <br />
       <LandingSnippet title="New Products" href="#">
         {[1, 2, 3, 4].map((d) => (
@@ -94,7 +101,6 @@ export default async function Home() {
       <br />
       <FeaturedProducts />
       <br />
-      {/* {session ? <>{JSON.stringify(session.accessToken)}</> : <> Not logged in</>} */}
     </main>
   );
 }
