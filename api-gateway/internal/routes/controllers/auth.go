@@ -153,6 +153,7 @@ func LoginWithCredentials(c *gin.Context) {
 		ID          string  `json:"id"`
 		Name        *string `json:"name"`
 		Email       string  `json:"email"`
+		Role        string  `json:"role"`
 		ImageUrl    *string `json:"imageUrl"`
 		AccessToken string  `json:"accessToken"`
 	}
@@ -199,6 +200,7 @@ func LoginWithCredentials(c *gin.Context) {
 		"sub":   user.ID,
 		"name":  user.Name,
 		"email": user.Email,
+		"role":  user.Role,
 		"exp":   time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
@@ -216,6 +218,7 @@ func LoginWithCredentials(c *gin.Context) {
 		Name:        user.Name,
 		Email:       user.Email,
 		ID:          user.ID,
+		Role:        user.Role,
 		ImageUrl:    user.ImageUrl,
 		AccessToken: tokenString,
 	}
