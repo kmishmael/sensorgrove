@@ -7,6 +7,7 @@ const api = axios.create({
 
 api.interceptors.request.use(async (config: any) => {
     const session = await getSession();
+    console.log('using ', `Bearer ${process.env.PUBLIC_ACCESSTOKEN}`)
     config.headers.Authorization = `Bearer ${process.env.PUBLIC_ACCESSTOKEN}`
     return config
 })

@@ -3,6 +3,21 @@ import GoogleProvider from 'next-auth/providers/google'
 import { NextAuthOptions } from 'next-auth';
 import axios from '@/lib/axios/public'
 
+// async function checkUser(email: string) {
+//     const res = await axios.get('/users', { params: { email: email } }).catch((error: any) => {
+//         console.log('ERROR =>', error.message)
+//     })
+//     const response = axios({
+//         method: "get",
+//         baseURL: 'http://localhost:8000',
+//         params: { email: email },
+//         url: '/users'
+
+//     })
+//     console.log(res)
+//     return res
+// }
+
 export const authOptions: NextAuthOptions = {
     pages: {
         signIn: '/auth/login'
@@ -22,41 +37,53 @@ export const authOptions: NextAuthOptions = {
             //session.accessToken = token.accessToken as string;
             return session;
         },
-        /*
+
         async signIn({ user, account, profile, email, credentials }) {
 
             if (account?.provider == 'credentials') {
                 return true
             }
-            else if (account?.provider == 'google') {
-                const res = await axios.post('/users', { email: profile?.email })
-                console.log('response=> ', res.status)
-                console.log('resdata => ', res.data)
+            if (account?.provider == 'google') {
+                console.log('it is google')
 
-                axios.post('/account', {
-                    userId: account.userId,
+                const res = await axios.get('/users', { params: { email: profile?.email } })
+                console.log('RES1 =>', res.data)
+                const { error } = res.data
+                if (!error) {
+                    console.log('account already exit')
+                    return true
+                }
+                let accountData = {
                     type: account.type,
                     provider: account.provider,
                     providerAccountId: account.providerAccountId,
                     refresh_token: account.refresh_token,
                     access_token: account.access_token,
-                    expires_at: account.expires_at,
+                    expires_at: account.expires_at?.toString(),
                     token_type: account.token_type,
                     scope: account.scope,
                     id_token: account.id_token,
+                }
+                console.log(accountData)
+                const res2 = await axios.post('/account', accountData)
+
+                console.log(res.data)
+
+                const res3 = await axios.post('/signup', {
+                    "name": profile?.name,
+                    "email": profile?.email,
+                    "provider": account.provider,
+                    "image": profile?.image,
                 })
 
-                return true
+                if (res2.status < 300 && res3.status < 300) {
+                    return true
+                }
+                return false
             }
-
-            console.log('USER => ', user)
-            console.log('ACCOUNT => ', account)
-            console.log('PROFILE => ', profile)
-            console.log('EMAIL => ', email)
-            console.log('CREDENTIALS => ', credentials)
-            return true
+            return false
         },
-        */
+
     },
     providers: [
         CredentialsProvider({

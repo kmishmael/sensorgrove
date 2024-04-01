@@ -9,6 +9,7 @@ import LandingSnippet from "@/components/layouts/landing-snippet";
 import { RiAppleFill } from "react-icons/ri";
 import FeaturedProducts from "@/components/featured";
 import SignOut from "@/components/signout";
+import axios from "@/lib/axios/public";
 // import { useSession } from 'next-auth/react';
 //   const { data: session, status } = useSession();
 
@@ -23,14 +24,14 @@ const categories = [
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
+  const res = await axios.get("/users", {
+    params: { email: "me@kmishmael.tech" },
+  });
   return (
     <main className="min-h-screen px-20">
-      {session ? (
-        <>{JSON.stringify(session)}</>
-      ) : (
-        <> Not logged in</>
-      )}
-
+      {session ? <>{JSON.stringify(session)}</> : <> Not logged in</>}
+      RES status: {JSON.stringify(res.status)}
+      RES data: {JSON.stringify(res.data)}
       <NavBar />
       <CategoriesButtons />
       <Carousel data={[] as any} />
@@ -56,7 +57,6 @@ export default async function Home() {
         ))}
       </LandingSnippet>
       <br />
-
       <LandingSnippet title="Top Categories" href="#">
         {categories.map((d) => (
           <div key={d.name} className="flex flex-col gap-2 w-[15%] p-4">
@@ -75,7 +75,6 @@ export default async function Home() {
       </LandingSnippet>
       <br />
       <br />
-
       <LandingSnippet title="Top Brands" href="#">
         {[1, 2, 3].map((d) => (
           <div
@@ -96,7 +95,6 @@ export default async function Home() {
           </div>
         ))}
       </LandingSnippet>
-
       <br />
       <br />
       <FeaturedProducts />
