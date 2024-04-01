@@ -21,7 +21,7 @@ export const LoginForm = (props: Props) => {
   };
 
   const handleCredentialLogin = async (data: any) => {
-    //console.log(data);
+    console.log(data);
 
     const res = await signIn("credentials", {
       ...data,
@@ -48,11 +48,32 @@ export const LoginForm = (props: Props) => {
     handleCredentialLogin(data);
   };
 
+  const handleTest = () => {
+    alert("sj");
+    console.log("running sth");
+  };
+
+  const handleSignInWithGoogle = async () => {
+
+    const res = await signIn("google", {
+      callbackUrl: getLoginSuccessRedirectUrl(),
+      redirect: false,
+    });
+
+    if (res) {
+      if (res.ok) {
+        console.log(res);
+        router.push(res.url!);
+      } else {
+        router.push(`/auth/login?error=${res.error}`);
+      }
+    }
+  };
+
   return (
     <div className="flex justify-center">
       <div className="border border-gray-600 rounded m-2 w-full sm:w-1/2 lg:w-1/3 px-4 py-6">
         <h6 className="text-center">Login</h6>
-
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -101,6 +122,13 @@ export const LoginForm = (props: Props) => {
             </div>
           </div>
         </form>
+        <button
+          className="btn w-full p-2 mt-4 rounded bg-red-600 hover:bg-red-800 btn-info"
+          type="submit"
+          onClick={handleSignInWithGoogle}
+        >
+          SigIn with Google
+        </button>
         <div className="flex p-2 text-sm justify-end">
           <p>
             No account?

@@ -120,9 +120,9 @@ func SignupWithCredentials(c *gin.Context) {
 		})
 		return
 	}
-
+	password := string(hash)
 	// Create the user
-	user := models.User{Email: body.Email, Password: string(hash)}
+	user := models.User{Email: body.Email, Password: &password}
 
 	result := initializers.DB.Create(&user)
 
@@ -153,6 +153,7 @@ func LoginWithCredentials(c *gin.Context) {
 		ID          string  `json:"id"`
 		Name        *string `json:"name"`
 		Email       string  `json:"email"`
+		Role        string  `json:"role"`
 		ImageUrl    *string `json:"imageUrl"`
 		AccessToken string  `json:"accessToken"`
 	}
@@ -160,7 +161,7 @@ func LoginWithCredentials(c *gin.Context) {
 	if c.Bind(&body) != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": "Failed to read body",
-			})
+		})
 
 		return
 	}
@@ -169,6 +170,7 @@ func LoginWithCredentials(c *gin.Context) {
 	var user models.User
 
 	initializers.DB.First(&user, "email = ?", body.Email)
+	initializers.DB.Where("email = ? AND provider = ?", body.Email, "credentials").First(&user)
 
 	if user.ID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -178,7 +180,13 @@ func LoginWithCredentials(c *gin.Context) {
 	}
 
 	// Compare sent in password with saved users password
-	err := bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(body.Password))
+	if user.Password == nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Invalid email or password",
+		})
+		return
+	}
+	err := bcrypt.CompareHashAndPassword([]byte(*user.Password), []byte(body.Password))
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -192,6 +200,7 @@ func LoginWithCredentials(c *gin.Context) {
 		"sub":   user.ID,
 		"name":  user.Name,
 		"email": user.Email,
+		"role":  user.Role,
 		"exp":   time.Now().Add(time.Hour * 24 * 30).Unix(),
 	})
 
@@ -209,6 +218,7 @@ func LoginWithCredentials(c *gin.Context) {
 		Name:        user.Name,
 		Email:       user.Email,
 		ID:          user.ID,
+		Role:        user.Role,
 		ImageUrl:    user.ImageUrl,
 		AccessToken: tokenString,
 	}

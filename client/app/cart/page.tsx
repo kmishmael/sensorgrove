@@ -138,25 +138,23 @@ export default function Page() {
               </div>
               <div className="py-1 mt-2 grid grid-cols-4 gap-5">
                 {[1, 2, 3, 4].map((d) => (
-                  
-                    <div key={d} className="flex flex-col gap-2 p-4">
-                      <div className="h-44 flex justify-center bg-sky-100 rounded-lg">
-                        <img className="" src="/laptop-showcase.png" alt="" />
-                      </div>
-                      <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
-                      <div className="flex flex-col gap-2">
-                        <p className="font-medium text-neutral-800 text-lg">
-                          $930.90
-                        </p>
-                        <h3>Iphone 14 promax 256gb</h3>
-                        <button className="py-1 w-fit px-4 flex flex-row items-center hover:bg-primary hover:text-white duration-150 ease-in transition-colors gap-2 font-semibold border border-neutral-400 text-primary rounded-md">
-                          <IoCartOutline className="h-5 w-5" />
-                          <span>Move to cart</span>
-                        </button>
-                      </div>
-                      <div></div>
+                  <div key={d} className="flex flex-col gap-2 p-4">
+                    <div className="h-44 flex justify-center bg-sky-100 rounded-lg">
+                      <img className="" src="/laptop-showcase.png" alt="" />
                     </div>
-                  
+                    <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
+                    <div className="flex flex-col gap-2">
+                      <p className="font-medium text-neutral-800 text-lg">
+                        $930.90
+                      </p>
+                      <h3>Iphone 14 promax 256gb</h3>
+                      <button className="py-1 w-fit px-4 flex flex-row items-center hover:bg-primary hover:text-white duration-150 ease-in transition-colors gap-2 font-semibold border border-neutral-400 text-primary rounded-md">
+                        <IoCartOutline className="h-5 w-5" />
+                        <span>Move to cart</span>
+                      </button>
+                    </div>
+                    <div></div>
+                  </div>
                 ))}
               </div>
             </div>
