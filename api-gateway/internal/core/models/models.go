@@ -47,6 +47,7 @@ type Product struct {
 	ID          string  `json:"id" gorm:"default:gen_random_uuid();"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
+	Slug        string  `json:"slug"`
 	SKU         string  `json:"sku"`
 	CategoryID  string  `json:"category_id"`
 	InventoryID *string `json:"inventory_id"`
