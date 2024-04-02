@@ -10,12 +10,12 @@ const data = [
   { text: "Home Improvement" },
   { text: "Sports, Toys & Luggage" },
 ];
-export default function CategoriesButtons() {
+export default function CategoriesButtons({ categories }: { categories: any }) {
   return (
-    <div className="border-t flex justify-between border-b py-2">
-      {data.map((d) => (
-        <div key={d.text}>
-          <ButtonDrop title={d.text} />
+    <div className="border-t flex gap-3 border-b py-2">
+      {categories.map((d: any) => (
+        <div key={d.slug}>
+          <ButtonDrop title={d.name} />
         </div>
       ))}
     </div>
