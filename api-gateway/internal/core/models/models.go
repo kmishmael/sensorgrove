@@ -47,20 +47,30 @@ type Product struct {
 	ID          string  `json:"id" gorm:"default:gen_random_uuid();"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
-	Slug        string  `json:"slug"`
+	Slug        string  `json:"slug" gorm:"index"`
 	SKU         string  `json:"sku"`
 	CategoryID  string  `json:"category_id"`
 	InventoryID *string `json:"inventory_id"`
 	Price       float64 `json:"price"`
 	DiscountID  *string `json:"discount_id"`
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   gorm.DeletedAt `gorm:"index"`
 
 	Category  ProductCategory  `json:"category" gorm:"foreignKey:CategoryID"`
 	Inventory ProductInventory `json:"inventory" gorm:"foreignKey:InventoryID"`
 	Discount  Discount         `json:"discount" gorm:"foreignKey:DiscountID"`
 	Images    []ProductImage   `json:"images" gorm:"foreignKey:ProductID"`
+}
+
+type ProductReview struct {
+	ID        string  `json:"id" gorm:"default:gen_random_uuid();"`
+	ProductID string  `json:"product_id"`
+	UserID    string  `json:"user_id"`
+	Rating    int     `json:"rating"`
+	Title     string  `json:"title"`
+	Comment   *string `json:"comment"`
+	User      User    `json:"user" gorm:"foreignKey:UserID"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 type ProductImage struct {
@@ -70,8 +80,6 @@ type ProductImage struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
-
-	Product Product `json:"product" gorm:"foreignKey:ProductID"`
 }
 
 type ProductCategory struct {
