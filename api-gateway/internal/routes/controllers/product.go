@@ -1,12 +1,15 @@
 package controllers
 
 import (
+	"fmt"
+	"math"
 	"net/http"
+
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 	"github.com/kmishmael/sensorgrove/internal/core/models"
 	"github.com/kmishmael/sensorgrove/internal/initializers"
-	"strconv"
 )
 
 // CreateProduct creates a new product
@@ -32,7 +35,85 @@ func GetProducts(c *gin.Context) {
 
 	page := c.DefaultQuery("page", "1")
 	limit := c.DefaultQuery("limit", "10")
-	category := c.DefaultQuery("category", "All")
+	categorySlug := c.DefaultQuery("category", "")
+	priceLessThan := c.DefaultQuery("lt", "")
+	priceGreaterThan := c.DefaultQuery("gt", "")
+
+	pageNumber, err := strconv.Atoi(page)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": page + " cannot be parsed as an integer."})
+		return
+	}
+
+	limitNumber, err := strconv.Atoi(limit)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": limit + " cannot be parsed as an integer."})
+		return
+	}
+	offset := (pageNumber - 1) * limitNumber
+
+	query := initializers.DB.Model(&models.Product{})
+
+	if categorySlug != "" {
+		var category models.ProductCategory
+		if err := initializers.DB.Where("slug = ?", categorySlug).First(&category).Error; err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Category not found"})
+			return
+		}
+		query = query.Where("category_id = ?", category.ID)
+	}
+
+	if priceLessThan != "" {
+		price, err := strconv.ParseFloat(priceLessThan, 64)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid priceLessThan value"})
+			return
+		}
+		query = query.Where("price < ?", price)
+	}
+
+	if priceGreaterThan != "" {
+		price, err := strconv.ParseFloat(priceGreaterThan, 64)
+		if err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid priceGreaterThan value"})
+			return
+		}
+		query = query.Where("price > ?", price)
+	}
+	result := query.
+		Offset(offset).
+		Limit(limitNumber).
+		Preload("Category").
+		Preload("Inventory").
+		Preload("Discount").
+		Preload("Images").
+		Find(&products)
+
+	if result.Error != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch products"})
+		return
+	}
+
+	var totalCount int64
+	query.Count(&totalCount)
+
+	totalPages := int(math.Ceil(float64(totalCount) / float64(limitNumber)))
+
+	c.JSON(http.StatusOK, gin.H{
+		"products":     products,
+		"page":         pageNumber,
+		"totalPages":   totalPages,
+		"totalCount":   totalCount,
+		"perPage":      limitNumber,
+		"currentCount": len(products),
+	})
+}
+
+func GetProducts2(c *gin.Context) {
+	var products []models.Product
+
+	page := c.DefaultQuery("page", "1")
+	limit := c.DefaultQuery("limit", "10")
 
 	pageNumber, err := strconv.Atoi(page)
 	if err != nil {
@@ -55,11 +136,23 @@ func GetProducts(c *gin.Context) {
 }
 
 // GetProductByID retrieves a single product by ID
-func GetProductByID(c *gin.Context) {
+func GetProductBySlug(c *gin.Context) {
 	var product models.Product
-	id := c.Param("id")
+	slug := c.Param("slug")
+	//fmt.Printf("slug ===> %s\n", slug)
 
-	result := initializers.DB.First(&product, id)
+	query := initializers.DB.Model(&models.Product{})
+
+	result := query.
+		Where("slug = ?", slug).
+		Preload("Category").
+		Preload("Inventory").
+		Preload("Discount").
+		Preload("Images").
+		Find(&product)
+
+	fmt.Println(result)
+
 	if result.Error != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Product not found"})
 		return
