@@ -22,8 +22,10 @@ export default async function Page({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <NavBar />
-      <CategoriesButtons categories={categories} />
+      <div className="px-20">
+        <NavBar />
+        <CategoriesButtons categories={categories} />
+      </div>
       <div className="bg-gray-50">
         <div className="px-20">
           <div className="flex flex-row items-center gap-2 py-4 text-neutral-400">
@@ -42,9 +44,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
         <div className="px-20">
-          <div className="h-full p-4 rounded-md border border-sky-300 bg-white grid grid-cols-2 gap-4">
+          <div className="h-full p-4 rounded-md border border-sky-300 bg-white grid grid-cols-2 gap-8">
             <ProductGallery images={product.images} />
-            <ProductTitle />
+            <ProductTitle category={product.category} name={product.name} price={product.price} id={product.id} />
           </div>
         </div>
 
