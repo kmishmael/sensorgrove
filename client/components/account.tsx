@@ -4,6 +4,7 @@ import { User } from "iconsax-react";
 import { useSession } from "next-auth/react";
 import PopOver from "./popover";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import Link from "next/link";
 
 export default function Account() {
   const { data: session, status } = useSession();
@@ -28,13 +29,18 @@ export default function Account() {
           </>
         ) : (
           <>
-            <User
-              className="h-5 w-5 font-semibold text-primary"
-              variant="Outline"
-            />
-            <p className="text-gray-600 font-semibold text-sm">
-              Sign Up/Sign in
-            </p>
+            <Link
+              className="flex flex-row gap-2 items-center"
+              href="/auth/login"
+            >
+              <User
+                className="h-5 w-5 font-semibold text-primary"
+                variant="Outline"
+              />
+              <p className="text-gray-600 font-semibold text-sm">
+                Sign Up/Sign in
+              </p>
+            </Link>
           </>
         )}
       </div>

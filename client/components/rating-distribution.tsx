@@ -19,12 +19,12 @@ export default function RatingDistribution({
                 className="text-normal flex items-center gap-2 font-medium text-blue-600 dark:text-blue-500 hover:underline"
               >
                 {d} <FaStar className="h-4 w-4" />
-                <span className=" w-8">({ratingData[d]})</span>
+                <span className=" w-8">({ratingData[d] || 0})</span>
               </a>
               <div className="w-2/4 h-3 mx-4 bg-sky-100 rounded-full">
                 <div
                   className="h-3 bg-primary rounded-full"
-                  style={{ width: `${(ratingData[d] / totalRatings) * 100}%` }}
+                  style={{ width: `${((ratingData[d] || 0) / totalRatings) * 100}%` }}
                 ></div>
               </div>
             </div>

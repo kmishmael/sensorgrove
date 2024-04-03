@@ -63,18 +63,22 @@ export const authOptions: NextAuthOptions = {
                     token_type: account.token_type,
                     scope: account.scope,
                     id_token: account.id_token,
+
                 }
                 console.log(accountData)
                 const res2 = await axios.post('/account', accountData)
 
                 console.log(res.data)
 
-                const res3 = await axios.post('/signup', {
-                    "name": profile?.name,
-                    "email": profile?.email,
-                    "provider": account.provider,
-                    "image": profile?.image,
-                })
+                console.log("PROFILE=>", profile)
+
+                let newData = {
+                    name: profile?.name,
+                    email: profile?.email,
+                    provider: account.provider,
+                    image: (profile as any).picture || null,
+                }
+                const res3 = await axios.post('/signup-oauth', newData)
 
                 if (res2.status < 300 && res3.status < 300) {
                     return true

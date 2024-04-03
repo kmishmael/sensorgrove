@@ -1,4 +1,4 @@
-export default function ProductDescription() {
+export default function ProductDescription({content}: {content: string}) {
   return (
     <>
       <div className="p-4 bg-white border rounded-md border-sky-300">

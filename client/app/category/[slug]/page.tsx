@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import CategoriesButtons from "@/components/categories-buttons";
 import NavBar from "@/components/navbar";
 import { RiArrowRightSLine } from "react-icons/ri";
@@ -10,6 +11,7 @@ import Link from "next/link";
 export default async function Page({ params }: { params: { slug: string } }) {
   const categories = await (await axios.get("/product-categories")).data;
   const products = await (await axios.get("/products")).data;
+  console.log(products);
   return (
     <div className="">
       <div className="px-20">
@@ -36,14 +38,18 @@ export default async function Page({ params }: { params: { slug: string } }) {
               <CategoryBar />
 
               <div className="p-4 grid grid-cols-3 gap-4">
-                {products.map((d: any) => (
+                {products.products.map((d: any) => (
                   <Link
                     key={d.slug}
                     href={`/product/${d.slug}`}
                     className="flex flex-col gap-2 w-full border p-4 rounded-lg shadow-md"
                   >
                     <div className="h-44 flex justify-center">
-                      <img className="" src={d.imageUrl} alt="" />
+                      <img
+                        className="object-contain"
+                        src={d.images[0].url}
+                        alt=""
+                      />
                     </div>
                     <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
                     <div>
