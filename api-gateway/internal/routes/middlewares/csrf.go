@@ -7,7 +7,7 @@ import (
 
 func ConfigureCORS() gin.HandlerFunc {
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:8080"}
+	config.AllowOrigins = []string{"http://localhost:3000", "https://sensorgrove.vercel.app/"}
 	config.AllowHeaders = append(config.AllowHeaders, "Authorization")
 	config.ExposeHeaders = []string{"Content-Length"}
 	config.AllowCredentials = true

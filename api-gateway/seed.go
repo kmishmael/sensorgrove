@@ -16,7 +16,7 @@ import (
 
 // Define your models here...
 
-func main() {
+func main2() {
 	// Define your PostgreSQL connection string
 	err := godotenv.Load()
 
