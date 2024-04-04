@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="flex flex-col gap-2 bg-primary text-white">
         <div className="flex flex-row gap-8 px-20 py-10 justify-between">
           <div className="flex flex-col gap-4">
-            <h2 className="font-bold text-2xl">MegaMart</h2>
+            <h2 className="font-bold text-2xl">SensorGrove</h2>
             <div>
               <p className="font-semibold">Contact Us</p>
               <br />
@@ -47,14 +47,12 @@ export default function Footer() {
             <div>
               <ul className="pl-6 list-disc flex flex-col gap-2">
                 <li>
-                  <a>Staples</a>
+                  <a>Laptops</a>
                 </li>
-                <li>Beverages</li>
-                <li>Personal Care</li>
-                <li>Home care</li>
-                <li>Baby care</li>
                 <li>Smartphones</li>
-                <li>Laptops</li>
+                <li>Gaming </li>
+                <li>Wearables</li>
+                <li>Accessories</li>
               </ul>
             </div>
           </div>
@@ -87,7 +85,7 @@ export default function Footer() {
         </div>
         <hr className="border-sky-200" />
         <div className="flex justify-center py-4">
-          <p>&copy; 2024 MegaMart</p>
+          <p>&copy; 2024 SensorGrove</p>
         </div>
       </div>
     </>
