@@ -16,6 +16,7 @@ import { Suspense } from "react";
 export default async function Page({ params }: { params: { slug: string } }) {
   const categories = await (await axios.get("/product-categories")).data;
   const product = await (await axios.get(`/products/${params.slug}`)).data;
+  const products = await (await axios.get("/products")).data;
 
   if (!product) {
     return notFound();
@@ -47,9 +48,15 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="px-20">
           <div className="h-full p-4 rounded-md border border-sky-300 bg-white grid grid-cols-2 gap-8">
             <ProductGallery images={product.images} />
-           <Suspense>
-           <ProductTitle product={product} category={product.category} name={product.name} price={product.price} id={product.id} />
-           </Suspense>
+            <Suspense>
+              <ProductTitle
+                product={product}
+                category={product.category}
+                name={product.name}
+                price={product.price}
+                id={product.id}
+              />
+            </Suspense>
           </div>
         </div>
 
@@ -57,11 +64,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
           <div className="col-span-9 flex flex-col gap-5">
             <ProductDescription content={product.description} />
             <ProductReviews id={product.id} />
-            <SimilarProducts />
-            <RecentlyViewedProducts />
+            <SimilarProducts products={products} />
+            <RecentlyViewedProducts products={products} />
           </div>
           <div className="col-span-3">
-            <LikelyProducts />
+            <LikelyProducts products={products} />
           </div>
         </div>
       </div>

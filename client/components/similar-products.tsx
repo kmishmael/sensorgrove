@@ -1,6 +1,8 @@
 import ProductCard from "./product-card";
 
-export default function SimilarProducts() {
+export default function SimilarProducts(
+  {products}: {products: any}
+) {
   return (
     <>
       <div className="p-4 bg-white border rounded-md border-sky-300">
@@ -13,10 +15,11 @@ export default function SimilarProducts() {
           </button>
         </div>
         <div className="py-1 mt-2 grid grid-cols-3 gap-5">
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
-          <ProductCard />
+          {products.products.slice(0,4).map((d: any) => (
+            <div key={d.slug}>
+             <ProductCard slug={d.slug} name={d.name} price={d.price} image={d.images[0].url} />
+            </div>
+          ))}
         </div>
       </div>
     </>
