@@ -18,7 +18,7 @@ export default function ProductGallery({ images }: { images: any[] }) {
         <div className="flex gap-6 h-20">
           {images.map((c) => (
             <div
-              key={c}
+              key={c.url}
               className="rounded-md h-20 w-20 border-primary border-2 p-1"
               onClick={() => SetCurrentImage(c.url)}
             >

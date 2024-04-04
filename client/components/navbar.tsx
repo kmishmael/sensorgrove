@@ -2,7 +2,7 @@ import { BiMenuAltLeft } from "react-icons/bi";
 import Search from "./search";
 import Account from "./account";
 import Cart from "./cart";
-
+import { Suspense } from "react";
 export default function NavBar() {
   return (
     <>
@@ -17,7 +17,9 @@ export default function NavBar() {
         <div className="flex gap-5 px-2 items-center">
           <Account />
           <div className="h-1/2 border-r border-2"></div>
-          <Cart />
+          <Suspense>
+            <Cart />
+          </Suspense>
         </div>
       </div>
     </>

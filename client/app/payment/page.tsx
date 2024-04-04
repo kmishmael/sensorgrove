@@ -1,13 +1,15 @@
 import CategoriesButtons from "@/components/categories-buttons";
 import NavBar from "@/components/navbar";
 import { Edit, Add } from "iconsax-react";
+import axios from "@/lib/axios/public";
 
-export default function Page() {
+export default async function Page() {
+  const categories = await (await axios.get("/product-categories")).data;
   return (
     <>
       <div className="px-20">
         <NavBar />
-        <CategoriesButtons />
+        <CategoriesButtons categories={categories} />
       </div>
       <div className="bg-gray-50">
         <div className="px-20 py-20 gap-6 grid grid-cols-12">

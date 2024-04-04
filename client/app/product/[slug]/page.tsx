@@ -11,6 +11,7 @@ import RecentlyViewedProducts from "@/components/recently-viewed";
 import axios from "@/lib/axios/public";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { Suspense } from "react";
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const categories = await (await axios.get("/product-categories")).data;
@@ -46,7 +47,9 @@ export default async function Page({ params }: { params: { slug: string } }) {
         <div className="px-20">
           <div className="h-full p-4 rounded-md border border-sky-300 bg-white grid grid-cols-2 gap-8">
             <ProductGallery images={product.images} />
-            <ProductTitle category={product.category} name={product.name} price={product.price} id={product.id} />
+           <Suspense>
+           <ProductTitle product={product} category={product.category} name={product.name} price={product.price} id={product.id} />
+           </Suspense>
           </div>
         </div>
 
