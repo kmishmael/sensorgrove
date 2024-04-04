@@ -5,6 +5,7 @@ import "./globals.css";
 import { Providers } from "@/components/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import NextTopLoader from "nextjs-toploader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
         <Providers>
+          <NextTopLoader color="#008ecc" height={3} easing="ease"/>
           <Header />
           {children}
           <Footer />
