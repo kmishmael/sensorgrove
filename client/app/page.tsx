@@ -25,6 +25,7 @@ const categories = [
 export default async function Home() {
   const session = await getServerSession(authOptions);
   const categories = await (await axios.get("/product-categories")).data;
+  const products = await (await axios.get("/products")).data;
 
   return (
     <main className="min-h-screen px-20">
@@ -33,22 +34,29 @@ export default async function Home() {
       <Carousel data={[] as any} />
       <br />
       <LandingSnippet title="New Products" href="#">
-        {[1, 2, 3, 4].map((d) => (
-          <div
-            key={d}
+        {products.products.slice(0, 4).map((d: any) => (
+          <Link
+            href={`/product/${d.slug}`}
+            key={d.slug}
             className="flex flex-col gap-2 w-[23%] border p-4 rounded-lg shadow-md"
           >
             <div className="h-44 flex justify-center">
-              <img className="" src="/iphone.png" alt="" />
+              <img className="object-contain" src={d.images[0].url} alt="" />
             </div>
             <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
             <div>
-              <h3>Iphone 14 promax 256gb</h3>
+              <h3>{d.name}</h3>
             </div>
             <div>
-              <p>$930.90</p>
+              <p>
+                {" "}
+                {new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                }).format(d.price)}
+              </p>
             </div>
-          </div>
+          </Link>
         ))}
       </LandingSnippet>
       <br />
