@@ -49,7 +49,6 @@ export default async function Home() {
             </div>
             <div>
               <p>
-                {" "}
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
                   currency: "USD",
