@@ -96,9 +96,51 @@ func LoginWithProvider(c *gin.Context) {
 	}
 }
 
+func SignupWithOauth(c *gin.Context) {
+	// Get the email/pass off req Body
+	var body struct {
+		Email    string
+		Name     string
+		Provider string
+		Image    string
+	}
+
+	if c.Bind(&body) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to read body",
+		})
+		return
+	}
+
+	var userData models.User
+
+	initializers.DB.Where("email = ?", body.Email).First(&userData)
+
+	if userData.ID != "" {
+		c.JSON(http.StatusConflict, gin.H{
+			"error": "Email Already in use",
+		})
+		return
+	}
+	// Create the user
+	user := models.User{Email: body.Email, Name: &body.Name, Provider: body.Provider, ImageUrl: &body.Image}
+
+	result := initializers.DB.Create(&user)
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to create user.",
+		})
+	}
+
+	// Respond
+	c.JSON(http.StatusOK, gin.H{"status": "true", "message": "account creation successful"})
+}
+
 func SignupWithCredentials(c *gin.Context) {
 	// Get the email/pass off req Body
 	var body struct {
+		Name     string
 		Email    string
 		Password string
 	}

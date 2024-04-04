@@ -1,13 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import CategoriesButtons from "@/components/categories-buttons";
 import NavBar from "@/components/navbar";
 import { Edit } from "iconsax-react";
+import axios from "@/lib/axios/public";
+import Checkout from "@/components/checkout";
 
-export default function Page() {
+export default async function Page() {
+  const categories = await (await axios.get("/product-categories")).data;
+
   return (
     <>
       <div className="px-20">
         <NavBar />
-        <CategoriesButtons />
+        <CategoriesButtons categories={categories} />
       </div>
       <div className="bg-gray-50">
         <div className="px-20 py-20 gap-6 grid grid-cols-12">
@@ -139,9 +144,7 @@ export default function Page() {
               </div>
 
               <div className="py-4">
-                <button className="text-center font-semibold text-sm w-full py-2 px-4 rounded-md bg-primary hover:bg-sky-800 text-white">
-                  Continue to pay
-                </button>
+                <Checkout amount={10} />
               </div>
             </div>
           </div>

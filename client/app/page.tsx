@@ -8,8 +8,8 @@ import Carousel from "@/components/carousel";
 import LandingSnippet from "@/components/layouts/landing-snippet";
 import { RiAppleFill } from "react-icons/ri";
 import FeaturedProducts from "@/components/featured";
-import SignOut from "@/components/signout";
 import axios from "@/lib/axios/public";
+import Link from "next/link";
 // import { useSession } from 'next-auth/react';
 //   const { data: session, status } = useSession();
 
@@ -24,18 +24,13 @@ const categories = [
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
-  const res = await axios.get("/users", {
-    params: { email: "me@kmishmael.tech" },
-  });
+  const categories = await (await axios.get("/product-categories")).data;
+
   return (
     <main className="min-h-screen px-20">
-      {session ? <>{JSON.stringify(session)}</> : <> Not logged in</>}
-      RES status: {JSON.stringify(res.status)}
-      RES data: {JSON.stringify(res.data)}
       <NavBar />
-      <CategoriesButtons />
+      <CategoriesButtons categories={categories} />
       <Carousel data={[] as any} />
-      <SignOut />
       <br />
       <LandingSnippet title="New Products" href="#">
         {[1, 2, 3, 4].map((d) => (
@@ -58,19 +53,23 @@ export default async function Home() {
       </LandingSnippet>
       <br />
       <LandingSnippet title="Top Categories" href="#">
-        {categories.map((d) => (
-          <div key={d.name} className="flex flex-col gap-2 w-[15%] p-4">
+        {categories.map((d: any) => (
+          <Link
+            href={`/category/${d.slug}`}
+            key={d.slug}
+            className="flex flex-col gap-2 w-[15%] p-4"
+          >
             <div className="h-32 hover:border-primary border-2 border-transparent rounded-full p-2 bg-secondary w-32 flex justify-center items-center">
               <img
                 className="w-full h-full object-contain"
-                src={d.image}
+                src={d.imageUrl}
                 alt=""
               />
             </div>
             <div className="w-full text-sm text-gray-600 font-medium flex justify-center">
               <h3>{d.name}</h3>
             </div>
-          </div>
+          </Link>
         ))}
       </LandingSnippet>
       <br />

@@ -20,6 +20,7 @@ func RegisterRoutes(server *gin.Engine) {
 	server.POST("/account", controllers.CreateAccount)
 
 	server.POST("/signup", controllers.SignupWithCredentials)
+	server.POST("/signup-oauth", controllers.SignupWithOauth)
 	server.POST("/login", controllers.LoginWithCredentials)
 	server.GET("/validate", middlewares.Authenticate, controllers.Validate)
 	server.GET("/users", middlewares.Authenticate, controllers.GetUser)
@@ -27,9 +28,15 @@ func RegisterRoutes(server *gin.Engine) {
 	// PRODUCTS
 	server.POST("/products", middlewares.Authenticate, controllers.CreateProduct)
 	server.GET("/products", controllers.GetProducts)
-	server.GET("/products/:id", middlewares.Authenticate, controllers.GetProductByID)
+	server.GET("/products/:slug", middlewares.Authenticate, controllers.GetProductBySlug)
 	server.PUT("/products/:id", middlewares.Authenticate, controllers.UpdateProduct)
 	server.DELETE("products/:id", middlewares.Authenticate, controllers.DeleteProduct)
+
+	// PRODUCT REVIEWS
+	server.POST("/reviews", middlewares.Authenticate, controllers.CreateProductReview)
+	server.GET("/reviews/:product_id", controllers.GetProductReviews)
+	server.PUT("/reviews/:id", middlewares.Authenticate, controllers.UpdateProductReview)
+	server.DELETE("reviews/:id", middlewares.Authenticate, controllers.DeleteProductReview)
 
 	// CART - SHOPPING SESSION
 	server.POST("/carts", middlewares.Authenticate, controllers.CreateShoppingSession)

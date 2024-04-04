@@ -44,49 +44,58 @@ type Account struct {
 }
 
 type Product struct {
-	ID          string          `json:"id" gorm:"primaryKey"`
-	Name        string          `json:"name"`
-	Description string          `json:"description"`
-	SKU         string          `json:"sku"`
-	CategoryID  int             `json:"category_id"`
-	Category    ProductCategory `json:"category"`
-	InventoryID int             `json:"inventory_id"`
-	Price       float64         `json:"price"`
-	DiscountID  int             `json:"discount_id"`
-	CreatedAt   time.Time
-	UpdatedAt   time.Time
-	DeletedAt   gorm.DeletedAt `gorm:"index"`
+	ID          string  `json:"id" gorm:"default:gen_random_uuid();"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Slug        string  `json:"slug" gorm:"index"`
+	SKU         string  `json:"sku"`
+	CategoryID  string  `json:"category_id"`
+	InventoryID *string `json:"inventory_id"`
+	Price       float64 `json:"price"`
+	DiscountID  *string `json:"discount_id"`
 
+	Category  ProductCategory  `json:"category" gorm:"foreignKey:CategoryID"`
 	Inventory ProductInventory `json:"inventory" gorm:"foreignKey:InventoryID"`
 	Discount  Discount         `json:"discount" gorm:"foreignKey:DiscountID"`
 	Images    []ProductImage   `json:"images" gorm:"foreignKey:ProductID"`
 }
 
+type ProductReview struct {
+	ID        string  `json:"id" gorm:"default:gen_random_uuid();"`
+	ProductID string  `json:"product_id"`
+	UserID    string  `json:"user_id"`
+	Rating    int     `json:"rating"`
+	Title     string  `json:"title"`
+	Comment   *string `json:"comment"`
+	User      User    `json:"user" gorm:"foreignKey:UserID"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
+}
+
 type ProductImage struct {
-	ID        string `json:"id" gorm:"primaryKey"`
+	ID        string `json:"id" gorm:"default:gen_random_uuid();"`
 	ProductID string `json:"product_id"`
 	URL       string `json:"url"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt `gorm:"index"`
-
-	Product Product `json:"product" gorm:"foreignKey:ProductID"`
 }
 
 type ProductCategory struct {
-	ID          string `json:"id" gorm:"primaryKey"`
+	ID          string `json:"id" gorm:"default:gen_random_uuid();"`
 	Name        string `json:"name"`
+	Slug        string `json:"slug"`
 	Description string `json:"description"`
 	CreatedAt   time.Time
 	ImageUrl    *string `json:"imageUrl"`
 	UpdatedAt   time.Time
 	DeletedAt   gorm.DeletedAt `gorm:"index"`
-
-	Products []Product `json:"products" gorm:"foreignKey:CategoryID"`
+	Products    []Product      `json:"products" gorm:"foreignKey:CategoryID"`
 }
 
 type ProductInventory struct {
-	ID        string `json:"id" gorm:"primaryKey"`
+	ID        string `json:"id" gorm:"default:gen_random_uuid();"`
 	Quantity  int    `json:"quantity"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -94,7 +103,7 @@ type ProductInventory struct {
 }
 
 type Discount struct {
-	ID              string  `json:"id" gorm:"primaryKey"`
+	ID              string  `json:"id" gorm:"default:gen_random_uuid();"`
 	Name            string  `json:"name"`
 	Description     string  `json:"description"`
 	DiscountPercent float64 `json:"discount_percent"`
@@ -107,7 +116,7 @@ type Discount struct {
 }
 
 type OrderDetails struct {
-	ID        string  `json:"id" gorm:"primaryKey"`
+	ID        string  `json:"id" gorm:"default:gen_random_uuid();"`
 	UserID    string  `json:"user_id"`
 	Total     float64 `json:"total"`
 	PaymentID int     `json:"payment_id"`
@@ -117,7 +126,7 @@ type OrderDetails struct {
 }
 
 type OrderItem struct {
-	ID        string `json:"id" gorm:"primaryKey"`
+	ID        string `json:"id" gorm:"default:gen_random_uuid();"`
 	OrderID   string `json:"order_id"`
 	ProductID string `json:"product_id"`
 	Quantity  int    `json:"quantity"`
@@ -127,7 +136,7 @@ type OrderItem struct {
 }
 
 type PaymentDetails struct {
-	ID        string `json:"id" gorm:"primaryKey"`
+	ID        string `json:"id" gorm:"default:gen_random_uuid();"`
 	OrderID   string `json:"order_id"`
 	Amount    int    `json:"amount"`
 	Provider  string `json:"provider"`
@@ -138,7 +147,7 @@ type PaymentDetails struct {
 }
 
 type ShoppingSession struct {
-	ID        string  `json:"id" gorm:"primaryKey"`
+	ID        string  `json:"id" gorm:"default:gen_random_uuid();"`
 	UserID    string  `json:"user_id"`
 	Total     float64 `json:"total"`
 	CreatedAt time.Time
@@ -149,7 +158,7 @@ type ShoppingSession struct {
 }
 
 type CartItem struct {
-	ID        string `json:"id" gorm:"primaryKey"`
+	ID        string `json:"id" gorm:"default:gen_random_uuid();"`
 	SessionID string `json:"session_id"`
 	ProductID int    `json:"product_id"`
 	Quantity  int    `json:"quantity"`
@@ -159,7 +168,7 @@ type CartItem struct {
 }
 
 type UserAddress struct {
-	ID          int    `json:"id" gorm:"primaryKey"`
+	ID          string `json:"id" gorm:"default:gen_random_uuid();"`
 	UserID      string `json:"user_id"`
 	AddressLine string `json:"address_line"`
 	City        string `json:"city"`
@@ -172,7 +181,7 @@ type UserAddress struct {
 }
 
 type UserPayment struct {
-	ID          string    `json:"id" gorm:"primaryKey"`
+	ID          string    `json:"id" gorm:"default:gen_random_uuid();"`
 	UserID      string    `json:"user_id"`
 	PaymentType string    `json:"payment_type"`
 	Provider    string    `json:"provider"`

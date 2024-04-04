@@ -1,16 +1,22 @@
+/* eslint-disable @next/next/no-img-element */
 import CategoriesButtons from "@/components/categories-buttons";
 import NavBar from "@/components/navbar";
 import { RiArrowRightSLine } from "react-icons/ri";
 import CategoryBar from "@/components/category-bar";
 import SideCategory from "@/components/category-side";
 import SidePrice from "@/components/side-price";
+import axios from "@/lib/axios/public";
+import Link from "next/link";
 
-export default async function Page() {
+export default async function Page({ params }: { params: { slug: string } }) {
+  const categories = await (await axios.get("/product-categories")).data;
+  const products = await (await axios.get("/products")).data;
+  console.log(products);
   return (
     <div className="">
       <div className="px-20">
         <NavBar />
-        <CategoriesButtons />
+        <CategoriesButtons categories={categories} />
       </div>
       <div className="bg-primary2">
         <div className="px-20">
@@ -32,24 +38,27 @@ export default async function Page() {
               <CategoryBar />
 
               <div className="p-4 grid grid-cols-3 gap-4">
-                {[1, 2, 4, 5].map((d) => (
-                  
-                    <div
-                      key={d}
-                      className="flex flex-col gap-2 w-full border p-4 rounded-lg shadow-md"
-                    >
-                      <div className="h-44 flex justify-center">
-                        <img className="" src="/iphone.png" alt="" />
-                      </div>
-                      <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
-                      <div>
-                        <h3>Iphone 14 promax 256gb</h3>
-                      </div>
-                      <div>
-                        <p>$930.90</p>
-                      </div>
+                {products.products.map((d: any) => (
+                  <Link
+                    key={d.slug}
+                    href={`/product/${d.slug}`}
+                    className="flex flex-col gap-2 w-full border p-4 rounded-lg shadow-md"
+                  >
+                    <div className="h-44 flex justify-center">
+                      <img
+                        className="object-contain"
+                        src={d.images[0].url}
+                        alt=""
+                      />
                     </div>
-                  
+                    <hr className="h-[2px] w-full bg-gradient-to-r from-transparent via-gray-400 to-transparent" />
+                    <div>
+                      <h3>{d.name}</h3>
+                    </div>
+                    <div>
+                      <p>${d.price}</p>
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>

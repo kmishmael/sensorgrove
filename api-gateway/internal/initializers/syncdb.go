@@ -1,8 +1,13 @@
 package initializers
 
-import "github.com/kmishmael/sensorgrove/internal/core/models"
+import (
+	"fmt"
+
+	"github.com/kmishmael/sensorgrove/internal/core/models"
+)
 
 func SyncDatabase() {
+	fmt.Println("automigrating database")
 	DB.AutoMigrate(&models.User{})
 	DB.AutoMigrate(&models.Account{})
 	DB.AutoMigrate(&models.UserAddress{})

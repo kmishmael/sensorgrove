@@ -2,7 +2,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AuthProviders } from "@/components/providers";
+import { Providers } from "@/components/providers";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 
@@ -21,11 +21,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body className={inter.className}>
-        <AuthProviders>
+        <Providers>
           <Header />
           {children}
           <Footer />
-        </AuthProviders>
+        </Providers>
       </body>
     </html>
   );

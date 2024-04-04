@@ -4,12 +4,15 @@ import CustomerNavBar from "@/components/customer-navbar";
 import CustomerShortNav from "@/components/customer-shornav";
 import NavBar from "@/components/navbar";
 import { headers } from "next/headers";
+import axios from "@/lib/axios/public";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const categories = await (await axios.get("/product-categories")).data;
+
   const headersList = headers();
 
   const pathname = headersList.get("x-pathname")?.split("/")[2] || "";
@@ -18,7 +21,7 @@ export default function RootLayout({
     <>
       <div className="px-20">
         <NavBar />
-        <CategoriesButtons />
+        <CategoriesButtons categories={categories} />
       </div>
       <CustomerShortNav />
       <div className="px-20 py-2 gap-4 grid grid-cols-12">

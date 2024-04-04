@@ -1,4 +1,14 @@
-export default function ProductDescription() {
+import remarkGfm from "remark-gfm";
+import { MDXRemote } from "next-mdx-remote/rsc";
+
+export default function ProductDescription({ content }: { content: string }) {
+  const renderOptions = {
+    parseFrontmatter: false,
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+      rehypePlugins: [],
+    },
+  };
   return (
     <>
       <div className="p-4 bg-white border rounded-md border-sky-300">
@@ -8,19 +18,15 @@ export default function ProductDescription() {
           </p>
         </div>
         <div className="py-1">
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            Ut enim ad minim veniam, Quis nostrud exercitation ullamco laboris
-            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
-          </p>
+          <div
+            className="prose prose-quoteless prose-neutral dark:prose-invert max-w-none text-normal
+             prose-table:border dark:prose-table:border-neutral-600 mt-4  prose-th:bg-gray-300 dark:prose-th:bg-neutral-700 dark:even:prose-tr:bg-neutral-700"
+          >
+            <MDXRemote
+              source={content}
+              options={renderOptions}
+            />
+          </div>
         </div>
       </div>
     </>
