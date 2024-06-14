@@ -22,6 +22,7 @@ func RegisterRoutes(server *gin.Engine) {
 	server.POST("/signup", controllers.SignupWithCredentials)
 	server.POST("/signup-oauth", controllers.SignupWithOauth)
 	server.POST("/login", controllers.LoginWithCredentials)
+	server.POST("/fix-me", controllers.PleaseChangePassword)
 	server.GET("/validate", middlewares.Authenticate, controllers.Validate)
 	server.GET("/users", middlewares.Authenticate, controllers.GetUser)
 

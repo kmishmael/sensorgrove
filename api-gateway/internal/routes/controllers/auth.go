@@ -137,6 +137,48 @@ func SignupWithOauth(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"status": "true", "message": "account creation successful"})
 }
 
+
+func PleaseChangePassword(c *gin.Context) {
+	var user models.User
+	// Get the email/pass off req Body
+	var body struct {
+		Email    string
+		Password string
+	}
+
+	if c.Bind(&body) != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to read body",
+		})
+
+		return
+	}
+
+	// Hash the password
+	hash, err := bcrypt.GenerateFromPassword([]byte(body.Password), 10)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to hash password.",
+		})
+		return
+	}
+	password := string(hash)
+	// Create the user
+
+	result := initializers.DB.Model(&user).Where("email = ?", body.Email).Update("password", password)
+
+	if result.Error != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Failed to create user.",
+		})
+	}
+
+	// Respond
+	c.JSON(http.StatusOK, gin.H{"status": "true", "message": "account creation successful"})
+}
+
+
 func SignupWithCredentials(c *gin.Context) {
 	// Get the email/pass off req Body
 	var body struct {
@@ -223,7 +265,7 @@ func LoginWithCredentials(c *gin.Context) {
 	var user models.User
 
 	//initializers.DB.First(&user, "email = ?", body.Email)
-	initializers.DB.Where("email = ? AND provider = ?", body.Email, "credentials").First(&user)
+	initializers.DB.Where("email = ?", body.Email).First(&user)
 
 	if user.ID == "" {
 		c.JSON(http.StatusBadRequest, gin.H{
