@@ -32,6 +32,6 @@ go get ./cmd/server .
 to run the project
 
 ```bash
-go run ./cmd server .
+ go run ./cmd/server .
 ```
 
